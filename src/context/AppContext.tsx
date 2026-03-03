@@ -145,7 +145,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
     const [searchQuery, setSearchQuery]     = useState('');
     const [activeCategory, setActiveCategory] = useState<Category | 'all'>('all');
-    const [viewMode, setViewMode]           = useState<ViewMode>('normal');
+    const [viewMode, setViewMode]           = useState<ViewMode>('calendar');
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [scrollTargetId, setScrollTargetId]     = useState<string | null>(null);
 

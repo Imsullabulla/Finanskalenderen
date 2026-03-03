@@ -165,6 +165,29 @@ export default function CalendarView() {
         return eventsByDate.get(key) || [];
     }, [eventsByDate]);
 
+    // 7 nearest upcoming deadlines within 30 days
+    const upcomingEvents = useMemo(() => {
+        const now = new Date();
+        const cutoff = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 30);
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const all: CalendarEvent[] = [];
+        eventsByDate.forEach(events => {
+            events.forEach(e => {
+                const d = new Date(e.deadline.getFullYear(), e.deadline.getMonth(), e.deadline.getDate());
+                if (d >= today && d <= cutoff) all.push(e);
+            });
+        });
+        all.sort((a, b) => a.deadline.getTime() - b.deadline.getTime());
+        // deduplicate same obligation+date
+        const seen = new Set<string>();
+        return all.filter(e => {
+            const key = `${e.obligation.id}-${e.deadline.toDateString()}`;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        }).slice(0, 7);
+    }, [eventsByDate]);
+
     // Navigation
     const navigate = (direction: number) => {
         const d = new Date(currentDate);
@@ -201,6 +224,29 @@ export default function CalendarView() {
 
     return (
         <div className="cal">
+            {upcomingEvents.length > 0 && (
+                <div className="cal-upcoming-strip">
+                    <span className="cal-upcoming-label">
+                        {lang === 'da' ? 'Kommende frister' : 'Upcoming deadlines'}
+                    </span>
+                    <div className="cal-upcoming-list">
+                        {upcomingEvents.map((e, i) => (
+                            <div key={i} className="cal-upcoming-row">
+                                <span
+                                    className="cal-upcoming-dot"
+                                    style={{ background: getStatusColor(e.urgency, e.obligation.state.reported) }}
+                                />
+                                <span className="cal-upcoming-name">
+                                    {e.obligation.name[lang] || e.obligation.name.da}
+                                </span>
+                                <span className="cal-upcoming-date">
+                                    {e.deadline.toLocaleDateString(lang === 'da' ? 'da-DK' : 'en-GB', { day: 'numeric', month: 'short' })}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
             <div className="cal-toolbar">
                 <div className="cal-toolbar-left">
                     <button className="cal-nav-btn" onClick={() => navigate(-1)}>‹</button>
