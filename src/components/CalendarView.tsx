@@ -69,6 +69,18 @@ function getStatusColor(urgency: UrgencyLevel, reported: boolean): string {
     }
 }
 
+function getCategoryColor(category: string): string {
+    switch (category) {
+        case 'skat':     return '#a2d2ff';
+        case 'miljø':    return '#b5ead7';
+        case 'eu':       return '#bde0fe';
+        case 'afgifter': return '#ffafcc';
+        case 'hr':       return '#ffc8dd';
+        case 'regnskab': return '#cdb4db';
+        default:         return '#e2e8f0';
+    }
+}
+
 // Compute which period (quarter/half-year) a deadline covers
 function getPeriodLabel(obligation: Obligation, deadline: Date, lang: string): string | null {
     const offset = obligation.monthOffset;
@@ -234,7 +246,7 @@ export default function CalendarView() {
                             <div key={i} className="cal-upcoming-row">
                                 <span
                                     className="cal-upcoming-dot"
-                                    style={{ background: getStatusColor(e.urgency, e.obligation.state.reported) }}
+                                    style={{ background: getCategoryColor(e.obligation.category) }}
                                 />
                                 <span className="cal-upcoming-name">
                                     {e.obligation.name[lang] || e.obligation.name.da}
@@ -375,7 +387,7 @@ function MonthView({
                                             <div key={`${ev.obligation.id}-${idx}`} className="cal-chip-wrapper">
                                                 <div
                                                     className="cal-event-chip"
-                                                    style={{ background: getStatusColor(ev.urgency, ev.obligation.state.reported), display: 'flex', flexDirection: 'column', gap: '1px' }}
+                                                    style={{ background: getCategoryColor(ev.obligation.category), color: '#1a1a1a', display: 'flex', flexDirection: 'column', gap: '1px' }}
                                                 >
                                                     <span>{name.slice(0, 14)}</span>
                                                     {ev.periodLabel && (
@@ -461,7 +473,7 @@ function WeekView({
                                         <div
                                             key={`${ev.obligation.id}-${idx}`}
                                             className="cal-week-event"
-                                            style={{ borderLeftColor: getStatusColor(ev.urgency, ev.obligation.state.reported) }}
+                                            style={{ borderLeftColor: getCategoryColor(ev.obligation.category) }}
                                         >
                                             <div className="cal-week-event-name">{name}</div>
                                             <div className="cal-week-event-freq">{freqLabel}{ev.periodLabel ? ` · ${ev.periodLabel}` : ''}</div>
@@ -517,10 +529,10 @@ function DayView({
                             <div
                                 key={`${o.id}-${idx}`}
                                 className="cal-day-event-card"
-                                style={{ borderLeftColor: getStatusColor(ev.urgency, o.state.reported) }}
+                                style={{ borderLeftColor: getCategoryColor(o.category) }}
                             >
                                 <div className="cal-day-event-top">
-                                    <span className="cal-day-event-dot" style={{ background: getStatusColor(ev.urgency, o.state.reported) }} />
+                                    <span className="cal-day-event-dot" style={{ background: getCategoryColor(o.category) }} />
                                     <h4 className="cal-day-event-title">{name}</h4>
                                     <span className="cal-day-event-freq">{freqLabel}</span>
                                     {ev.periodLabel && (
@@ -605,7 +617,7 @@ function YearView({
                                             <span
                                                 className="cal-year-mini-dot"
                                                 style={{
-                                                    background: getStatusColor(events[0].urgency, events[0].obligation.state.reported)
+                                                    background: getCategoryColor(events[0].obligation.category)
                                                 }}
                                             />
                                         )}
@@ -659,10 +671,10 @@ function DateDetailPanel({
                             <div
                                 key={`${o.id}-${idx}`}
                                 className="cal-detail-item"
-                                style={{ borderLeftColor: getStatusColor(ev.urgency, o.state.reported) }}
+                                style={{ borderLeftColor: getCategoryColor(o.category) }}
                             >
                                 <div className="cal-detail-item-top">
-                                    <span className="cal-detail-item-dot" style={{ background: getStatusColor(ev.urgency, o.state.reported) }} />
+                                    <span className="cal-detail-item-dot" style={{ background: getCategoryColor(o.category) }} />
                                     <span className="cal-detail-item-name">{name}</span>
                                     <span className="cal-detail-item-freq">{freqLabel}</span>
                                     {ev.periodLabel && (
