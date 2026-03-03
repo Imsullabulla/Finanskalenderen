@@ -191,6 +191,7 @@ export default function Sidebar() {
             </div>
 
             <div className="sidebar-footer">
+                {/* Email reminders button hidden until Resend domain is verified
                 <button
                     className="sidebar-export-btn"
                     onClick={() => setShowReminderModal(true)}
@@ -202,6 +203,7 @@ export default function Sidebar() {
                     </svg>
                     {lang === 'da' ? 'E-mail påmindelser' : 'Email Reminders'}
                 </button>
+                */}
                 <button
                     className="sidebar-export-btn"
                     onClick={() => setShowExportModal(true)}
@@ -217,9 +219,9 @@ export default function Sidebar() {
                 </button>
             </div>
 
-            {showReminderModal && (
+            {/* showReminderModal && (
                 <ReminderSettingsModal onClose={() => setShowReminderModal(false)} />
-            )}
+            ) */}
             {showExportModal && (
                 <CalendarExportModal onClose={() => setShowExportModal(false)} />
             )}
