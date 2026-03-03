@@ -1510,7 +1510,7 @@ textarea {
   background: var(--surface-secondary);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-3xl);
   flex-wrap: wrap;
 }
 
