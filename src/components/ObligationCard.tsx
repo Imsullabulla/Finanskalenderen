@@ -123,21 +123,6 @@ export default function ObligationCard({ obligation, index = 0, isExpanded = fal
                 >
                     {expanded ? t.floor.readLess : t.floor.readMore}
                 </button>
-                {state.reported ? (
-                    <button
-                        className="card-btn card-btn-reported"
-                        onClick={(e) => { e.stopPropagation(); unmarkReported(obligation.id); }}
-                    >
-                        ✓ {t.status.reported}
-                    </button>
-                ) : (
-                    <button
-                        className="card-btn card-btn-primary"
-                        onClick={(e) => { e.stopPropagation(); markReported(obligation.id); fireConfetti(); }}
-                    >
-                        {t.floor.markDone}
-                    </button>
-                )}
             </div>
 
             {/* Expand */}

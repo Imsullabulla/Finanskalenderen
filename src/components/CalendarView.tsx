@@ -547,17 +547,6 @@ function DayView({
                                         {formatCountdownShort(ev.daysRemaining, lang)}
                                     </span>
                                 </div>
-                                <div className="cal-day-event-actions">
-                                    {o.state.reported ? (
-                                        <button className="card-btn card-btn-reported" onClick={() => unmarkReported(o.id)}>
-                                            ✓ {t.status.reported}
-                                        </button>
-                                    ) : (
-                                        <button className="card-btn card-btn-primary" onClick={() => markReported(o.id)}>
-                                            {t.floor.markDone}
-                                        </button>
-                                    )}
-                                </div>
                             </div>
                         );
                     })}
@@ -684,17 +673,6 @@ function DateDetailPanel({
                                 </div>
                                 <div className="cal-detail-item-countdown" style={{ color: getCountdownColor(ev.daysRemaining) }}>
                                     {formatCountdownShort(ev.daysRemaining, lang)}
-                                </div>
-                                <div className="cal-detail-item-actions">
-                                    {o.state.reported ? (
-                                        <button className="card-btn card-btn-reported" style={{ padding: '4px 10px', fontSize: '0.7rem' }} onClick={() => unmarkReported(o.id)}>
-                                            ✓ {t.status.reported}
-                                        </button>
-                                    ) : (
-                                        <button className="card-btn card-btn-primary" style={{ padding: '4px 10px', fontSize: '0.7rem' }} onClick={() => markReported(o.id)}>
-                                            {t.floor.markDone}
-                                        </button>
-                                    )}
                                 </div>
                             </div>
                         );

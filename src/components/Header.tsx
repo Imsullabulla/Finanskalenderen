@@ -2,6 +2,7 @@
 import React from 'react';
 import { useI18n, languageNames, Language } from '@/i18n/I18nContext';
 import { useApp, ViewMode } from '@/context/AppContext';
+import { fireConfetti } from '@/utils/confetti';
 
 const viewModes: ViewMode[] = ['normal', 'calendar', 'list'];
 
@@ -37,6 +38,14 @@ export default function Header() {
                         </button>
                     ))}
                 </div>
+
+                <button
+                    className="confetti-btn"
+                    onClick={fireConfetti}
+                    title={lang === 'da' ? 'Fejr det!' : 'Celebrate!'}
+                >
+                    🎉
+                </button>
 
                 <div className="lang-switcher">
                     {(['da', 'en'] as Language[]).map(l => (

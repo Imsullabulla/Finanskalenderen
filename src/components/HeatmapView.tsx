@@ -109,21 +109,6 @@ function BentoCard({ obligation, index }: BentoCardProps) {
                                 <span>{t.floor.authority}: {obligation.authority}</span>
                             </div>
                             <div className="bento-card-btns">
-                                {state.reported ? (
-                                    <button
-                                        className="bento-btn bento-btn-reported"
-                                        onClick={e => { e.stopPropagation(); unmarkReported(obligation.id); }}
-                                    >
-                                        ✓ {t.status.reported}
-                                    </button>
-                                ) : (
-                                    <button
-                                        className="bento-btn bento-btn-primary"
-                                        onClick={e => { e.stopPropagation(); markReported(obligation.id); }}
-                                    >
-                                        {t.floor.markDone}
-                                    </button>
-                                )}
                                 {obligation.url && (
                                     <a
                                         href={obligation.url}

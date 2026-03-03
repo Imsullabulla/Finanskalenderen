@@ -59,25 +59,6 @@ export default function ListView() {
                             {o.deadlineInfo.formattedCountdown}
                         </span>
                         <span className="list-freq">{freqLabel}</span>
-                        <div className="list-actions">
-                            {o.state.reported ? (
-                                <button
-                                    className="card-btn card-btn-reported"
-                                    style={{ padding: '4px 10px', fontSize: '0.7rem' }}
-                                    onClick={() => unmarkReported(o.id)}
-                                >
-                                    ✓
-                                </button>
-                            ) : (
-                                <button
-                                    className="card-btn card-btn-primary"
-                                    style={{ padding: '4px 10px', fontSize: '0.7rem' }}
-                                    onClick={() => markReported(o.id)}
-                                >
-                                    ✓
-                                </button>
-                            )}
-                        </div>
                     </div>
                 );
             })}
