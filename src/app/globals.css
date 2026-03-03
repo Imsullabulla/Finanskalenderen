@@ -801,26 +801,9 @@ textarea {
   grid-column: span 2;
 }
 
-/* Status bar colors */
-.obligation-card.status-safe::before {
-  background: var(--status-safe);
-}
-
-.obligation-card.status-upcoming::before {
-  background: var(--status-upcoming);
-}
-
-.obligation-card.status-warning::before {
-  background: var(--status-warning);
-}
-
-.obligation-card.status-critical::before {
-  background: var(--status-critical);
-}
-
-.obligation-card.status-overdue::before {
-  background: var(--status-overdue);
-  height: 4px;
+/* Status bar colors — use category color via CSS variable */
+.obligation-card::before {
+  background: var(--cat-color, var(--status-safe));
 }
 
 .obligation-card.status-overdue {

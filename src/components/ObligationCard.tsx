@@ -18,6 +18,18 @@ interface ObligationCardProps {
 const MONTHS_DA = ['Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December'];
 const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+function getCategoryColor(category: string): string {
+    switch (category) {
+        case 'skat':     return '#a2d2ff';
+        case 'miljø':    return '#b5ead7';
+        case 'eu':       return '#bde0fe';
+        case 'afgifter': return '#ffafcc';
+        case 'hr':       return '#ffc8dd';
+        case 'regnskab': return '#cdb4db';
+        default:         return '#e2e8f0';
+    }
+}
+
 export default function ObligationCard({ obligation, index = 0, isExpanded = false, onExpand }: ObligationCardProps) {
     const { lang, t } = useI18n();
     const { markReported, unmarkReported, scrollTargetId, clearScrollTarget, fiscalYearOverrides, setFiscalYearOverride } = useApp();
@@ -72,14 +84,14 @@ export default function ObligationCard({ obligation, index = 0, isExpanded = fal
         <div
             ref={cardRef}
             className={`obligation-card status-${statusClass} ${shouldSpan ? 'span-2' : ''}`}
-            style={{ animationDelay: `${index * 0.04}s`, cursor: 'pointer' }}
+            style={{ animationDelay: `${index * 0.04}s`, cursor: 'pointer', '--cat-color': getCategoryColor(obligation.category) } as React.CSSProperties}
             onClick={handleCardClick}
             data-obligation-id={obligation.id}
         >
             {/* Header */}
             <div className="card-header">
                 <div className="card-title-row">
-                    <span className={`card-status-dot ${statusClass}`} />
+                    <span className={`card-status-dot ${statusClass}`} style={{ background: getCategoryColor(obligation.category) }} />
                     <span className="card-title">{name}</span>
                 </div>
                 <span className="card-frequency-badge">{freqLabel}</span>

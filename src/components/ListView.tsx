@@ -21,6 +21,18 @@ export default function ListView() {
         }
     };
 
+    const getCategoryColor = (category: string) => {
+        switch (category) {
+            case 'skat':     return '#a2d2ff';
+            case 'miljø':    return '#b5ead7';
+            case 'eu':       return '#bde0fe';
+            case 'afgifter': return '#ffafcc';
+            case 'hr':       return '#ffc8dd';
+            case 'regnskab': return '#cdb4db';
+            default:         return '#e2e8f0';
+        }
+    };
+
     return (
         <div className="list-view">
             <div className="list-view-header">
@@ -39,7 +51,7 @@ export default function ListView() {
 
                 return (
                     <div key={o.id} className="list-view-row">
-                        <span className="list-dot" style={{ background: statusColor }} />
+                        <span className="list-dot" style={{ background: getCategoryColor(o.category) }} />
                         <span className="list-name">{name}</span>
                         <span className="list-date">{o.deadlineInfo.formattedDate}</span>
                         <span className="list-countdown" style={{ color: statusColor }}>
