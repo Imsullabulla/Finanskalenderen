@@ -4,6 +4,7 @@ import { useI18n } from '@/i18n/I18nContext';
 import { useApp } from '@/context/AppContext';
 import { frequencyLabels } from '@/data/obligations';
 import type { UrgencyLevel } from '@/utils/deadlineEngine';
+import { getCountdownColor } from '@/utils/countdownColor';
 
 export default function ListView() {
     const { lang, t } = useI18n();
@@ -54,7 +55,7 @@ export default function ListView() {
                         <span className="list-dot" style={{ background: getCategoryColor(o.category) }} />
                         <span className="list-name">{name}</span>
                         <span className="list-date">{o.deadlineInfo.formattedDate}</span>
-                        <span className="list-countdown" style={{ color: statusColor }}>
+                        <span className="list-countdown" style={{ color: getCountdownColor(o.deadlineInfo.daysRemaining) }}>
                             {o.deadlineInfo.formattedCountdown}
                         </span>
                         <span className="list-freq">{freqLabel}</span>

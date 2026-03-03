@@ -929,25 +929,7 @@ textarea {
   letter-spacing: -0.02em;
 }
 
-.card-countdown.safe {
-  color: var(--status-safe);
-}
-
-.card-countdown.upcoming {
-  color: var(--status-upcoming);
-}
-
-.card-countdown.warning {
-  color: var(--status-warning);
-}
-
-.card-countdown.critical {
-  color: var(--status-critical);
-}
-
-.card-countdown.overdue {
-  color: var(--status-overdue);
-}
+/* countdown color set via inline style using getCountdownColor() */
 
 /* Card actions */
 .card-actions {

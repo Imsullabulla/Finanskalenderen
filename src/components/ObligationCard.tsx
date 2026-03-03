@@ -4,6 +4,7 @@ import { useI18n } from '@/i18n/I18nContext';
 import { useApp } from '@/context/AppContext';
 import { Obligation, frequencyLabels, obligationGroups } from '@/data/obligations';
 import { DeadlineInfo, UrgencyLevel } from '@/utils/deadlineEngine';
+import { getCountdownColor } from '@/utils/countdownColor';
 import type { ObligationState } from '@/context/AppContext';
 import CalendarSyncButton from '@/components/CalendarSyncButton';
 import { fireConfetti } from '@/utils/confetti';
@@ -109,7 +110,7 @@ export default function ObligationCard({ obligation, index = 0, isExpanded = fal
                 <div className="card-deadline-date">
                     {t.floor.deadline}: {deadlineInfo.formattedDate}
                 </div>
-                <div className={`card-countdown ${statusClass}`}>
+                <div className="card-countdown" style={{ color: getCountdownColor(deadlineInfo.daysRemaining) }}>
                     {deadlineInfo.formattedCountdown}
                 </div>
             </div>

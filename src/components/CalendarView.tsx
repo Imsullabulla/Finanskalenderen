@@ -4,6 +4,7 @@ import { useI18n } from '@/i18n/I18nContext';
 import { useApp } from '@/context/AppContext';
 import { Obligation, frequencyLabels } from '@/data/obligations';
 import { DeadlineInfo, UrgencyLevel, calculateAllDeadlines, getUrgencyLevel } from '@/utils/deadlineEngine';
+import { getCountdownColor } from '@/utils/countdownColor';
 import type { ObligationState } from '@/context/AppContext';
 
 type CalendarMode = 'day' | 'week' | 'month' | 'year';
@@ -402,7 +403,7 @@ function MonthView({
                                                     </div>
                                                     <div className="cal-chip-tooltip-deadline">
                                                         <span>{lang === 'da' ? 'Frist' : 'Deadline'}: {deadlineStr}</span>
-                                                        <span className="cal-chip-tooltip-countdown" style={{ color: getStatusColor(ev.urgency, ev.obligation.state.reported) }}>
+                                                        <span className="cal-chip-tooltip-countdown" style={{ color: getCountdownColor(ev.daysRemaining) }}>
                                                             {formatCountdownShort(ev.daysRemaining, lang)}
                                                         </span>
                                                     </div>
@@ -542,7 +543,7 @@ function DayView({
                                 <p className="cal-day-event-desc">{desc}</p>
                                 <div className="cal-day-event-meta">
                                     <span>{t.floor.authority}: {o.authority}</span>
-                                    <span className="cal-day-event-countdown" style={{ color: getStatusColor(ev.urgency, o.state.reported) }}>
+                                    <span className="cal-day-event-countdown" style={{ color: getCountdownColor(ev.daysRemaining) }}>
                                         {formatCountdownShort(ev.daysRemaining, lang)}
                                     </span>
                                 </div>
@@ -681,7 +682,7 @@ function DateDetailPanel({
                                         <span className="cal-detail-item-freq" style={{ background: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}>{ev.periodLabel}</span>
                                     )}
                                 </div>
-                                <div className="cal-detail-item-countdown" style={{ color: getStatusColor(ev.urgency, o.state.reported) }}>
+                                <div className="cal-detail-item-countdown" style={{ color: getCountdownColor(ev.daysRemaining) }}>
                                     {formatCountdownShort(ev.daysRemaining, lang)}
                                 </div>
                                 <div className="cal-detail-item-actions">
