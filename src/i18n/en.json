@@ -32,7 +32,7 @@
     },
     "floor": {
         "title": "Dashboard",
-        "empty": "Drag and drop obligations from the library to get started",
+        "empty": "Enable obligations from the sidebar to get started",
         "readMore": "Read more",
         "readLess": "Show less",
         "markDone": "Mark as reported",

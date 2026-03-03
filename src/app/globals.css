@@ -616,18 +616,6 @@ textarea {
   opacity: 0.55;
 }
 
-.sidebar-drag-handle {
-  color: var(--text-light);
-  cursor: grab;
-  font-size: var(--font-size-base);
-  flex-shrink: 0;
-  opacity: 0.4;
-  transition: opacity var(--transition-fast);
-}
-
-.sidebar-item:hover .sidebar-drag-handle {
-  opacity: 1;
-}
 
 .sidebar-item-info {
   flex: 1;

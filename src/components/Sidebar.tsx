@@ -159,7 +159,7 @@ export default function Sidebar() {
                                     onClick={() => handleObligationClick(obligation.id)}
                                     style={{ cursor: 'pointer' }}
                                 >
-                                    <span className="sidebar-drag-handle">☰</span>
+
                                     <div className="sidebar-item-info">
                                         <div className="sidebar-item-name">
                                             {obligation.name[lang] || obligation.name.da}
