@@ -1,0 +1,122 @@
+{
+    "app": {
+        "title": "Finanskalenderen",
+        "subtitle": "Overblik over alle virksomhedens indberetningspligter – samlet ét sted.",
+        "tagline": "Compliance Operating System for europæiske virksomheder"
+    },
+    "nav": {
+        "login": "Log ind",
+        "signup": "Opret konto",
+        "logout": "Log ud",
+        "settings": "Indstillinger",
+        "switchSetup": "Skift setup",
+        "newSetup": "Nyt setup",
+        "guestMode": "Gæstetilstand",
+        "language": "Sprog"
+    },
+    "sidebar": {
+        "title": "Pligtbibliotek",
+        "search": "Søg pligt...",
+        "filters": "Filtre",
+        "all": "Alle",
+        "active": "Aktive",
+        "inactive": "Inaktive",
+        "categories": {
+            "skat": "Skat",
+            "miljø": "Miljø",
+            "eu": "EU",
+            "afgifter": "Afgifter",
+            "hr": "HR",
+            "regnskab": "Regnskab"
+        }
+    },
+    "floor": {
+        "title": "Dashboard",
+        "empty": "Træk og slip pligter fra biblioteket for at komme i gang",
+        "readMore": "Læs mere",
+        "readLess": "Vis mindre",
+        "markDone": "Markér som indberettet",
+        "markUndone": "Ophæv markering",
+        "visitAuthority": "Gå til myndighed",
+        "daysRemaining": "dage tilbage",
+        "dayRemaining": "dag tilbage",
+        "daysOverdue": "dage overskredet",
+        "dayOverdue": "dag overskredet",
+        "dueToday": "Forfalder i dag!",
+        "ongoing": "Løbende",
+        "noDeadline": "Ingen fast frist",
+        "deadline": "Deadline",
+        "frequency": "Frekvens",
+        "authority": "Myndighed"
+    },
+    "views": {
+        "normal": "Normal",
+        "heatmap": "Heatmap",
+        "calendar": "Kalender",
+        "list": "Liste"
+    },
+    "status": {
+        "reported": "Indberettet",
+        "upcoming": "Snart",
+        "overdue": "Overskredet",
+        "inactive": "Ikke aktiveret"
+    },
+    "compliance": {
+        "title": "Compliance Score",
+        "reported": "Indberettet",
+        "pending": "Afventer",
+        "overdue": "Overskredet",
+        "inactive": "Ikke aktiv"
+    },
+    "setup": {
+        "title": "Opsæt din virksomhed",
+        "step1": "Virksomhedsinfo",
+        "step2": "Ansatte",
+        "step3": "Import & Produktion",
+        "step4": "Aktivitet",
+        "step5": "Opsummering",
+        "companyName": "Virksomhedsnavn",
+        "employees": "Antal ansatte",
+        "revenue": "Årlig omsætning (DKK)",
+        "import": "Importerer I varer fra udlandet?",
+        "export": "Eksporterer I varer?",
+        "production": "Producerer I emballage, elektronik eller tobak?",
+        "yes": "Ja",
+        "no": "Nej",
+        "next": "Næste",
+        "back": "Tilbage",
+        "generate": "Generér mit compliance-overblik",
+        "summary": "Opsummering"
+    },
+    "login": {
+        "title": "Log ind",
+        "email": "E-mail",
+        "password": "Adgangskode",
+        "google": "Log ind med Google",
+        "noAccount": "Har du ikke en konto?",
+        "createAccount": "Opret konto",
+        "forgotPassword": "Glemt adgangskode?"
+    },
+    "landing": {
+        "hero": "Aldrig gå glip af en indberetningsfrist igen",
+        "subtitle": "Finanskalenderen giver dig det fulde overblik over alle virksomhedens compliance-pligter – visuelt, intuitivt og automatisk.",
+        "cta": "Prøv gratis demo",
+        "ctaLogin": "Log ind",
+        "features": {
+            "visual": "Visuelt Overblik",
+            "visualDesc": "Se alle deadlines som dynamiske kort der vokser med fristens nærhed",
+            "smart": "Intelligent Motor",
+            "smartDesc": "Automatisk beregning af frister med justering for helligdage",
+            "multi": "Multi-selskab",
+            "multiDesc": "Administrer compliance for flere virksomheder fra én konto"
+        }
+    },
+    "frequencies": {
+        "monthly": "Månedlig",
+        "quarterly": "Kvartal",
+        "annual": "Årlig",
+        "semi-annual": "Halvårlig",
+        "ad-hoc": "Ad hoc",
+        "ongoing": "Løbende"
+    }
+}

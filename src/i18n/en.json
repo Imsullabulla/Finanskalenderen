@@ -1,0 +1,122 @@
+{
+    "app": {
+        "title": "Finanskalenderen",
+        "subtitle": "Overview of all your company's reporting obligations – in one place.",
+        "tagline": "Compliance Operating System for European Companies"
+    },
+    "nav": {
+        "login": "Log in",
+        "signup": "Sign up",
+        "logout": "Log out",
+        "settings": "Settings",
+        "switchSetup": "Switch setup",
+        "newSetup": "New setup",
+        "guestMode": "Guest mode",
+        "language": "Language"
+    },
+    "sidebar": {
+        "title": "Obligation Library",
+        "search": "Search obligations...",
+        "filters": "Filters",
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive",
+        "categories": {
+            "skat": "Tax",
+            "miljø": "Environment",
+            "eu": "EU",
+            "afgifter": "Duties",
+            "hr": "HR",
+            "regnskab": "Accounting"
+        }
+    },
+    "floor": {
+        "title": "Dashboard",
+        "empty": "Drag and drop obligations from the library to get started",
+        "readMore": "Read more",
+        "readLess": "Show less",
+        "markDone": "Mark as reported",
+        "markUndone": "Unmark",
+        "visitAuthority": "Visit authority",
+        "daysRemaining": "days remaining",
+        "dayRemaining": "day remaining",
+        "daysOverdue": "days overdue",
+        "dayOverdue": "day overdue",
+        "dueToday": "Due today!",
+        "ongoing": "Ongoing",
+        "noDeadline": "No fixed deadline",
+        "deadline": "Deadline",
+        "frequency": "Frequency",
+        "authority": "Authority"
+    },
+    "views": {
+        "normal": "Normal",
+        "heatmap": "Heatmap",
+        "calendar": "Calendar",
+        "list": "List"
+    },
+    "status": {
+        "reported": "Reported",
+        "upcoming": "Upcoming",
+        "overdue": "Overdue",
+        "inactive": "Inactive"
+    },
+    "compliance": {
+        "title": "Compliance Score",
+        "reported": "Reported",
+        "pending": "Pending",
+        "overdue": "Overdue",
+        "inactive": "Inactive"
+    },
+    "setup": {
+        "title": "Set up your company",
+        "step1": "Company info",
+        "step2": "Employees",
+        "step3": "Import & Production",
+        "step4": "Activity",
+        "step5": "Summary",
+        "companyName": "Company name",
+        "employees": "Number of employees",
+        "revenue": "Annual revenue (DKK)",
+        "import": "Do you import goods from abroad?",
+        "export": "Do you export goods?",
+        "production": "Do you produce packaging, electronics, or tobacco?",
+        "yes": "Yes",
+        "no": "No",
+        "next": "Next",
+        "back": "Back",
+        "generate": "Generate my compliance overview",
+        "summary": "Summary"
+    },
+    "login": {
+        "title": "Log in",
+        "email": "Email",
+        "password": "Password",
+        "google": "Log in with Google",
+        "noAccount": "Don't have an account?",
+        "createAccount": "Create account",
+        "forgotPassword": "Forgot password?"
+    },
+    "landing": {
+        "hero": "Never miss a reporting deadline again",
+        "subtitle": "Finanskalenderen gives you a complete overview of all your company's compliance obligations – visual, intuitive, and automatic.",
+        "cta": "Try free demo",
+        "ctaLogin": "Log in",
+        "features": {
+            "visual": "Visual Overview",
+            "visualDesc": "See all deadlines as dynamic cards that grow as the deadline approaches",
+            "smart": "Smart Engine",
+            "smartDesc": "Automatic deadline calculation with holiday adjustments",
+            "multi": "Multi-Company",
+            "multiDesc": "Manage compliance for multiple companies from one account"
+        }
+    },
+    "frequencies": {
+        "monthly": "Monthly",
+        "quarterly": "Quarterly",
+        "annual": "Annual",
+        "semi-annual": "Semi-annual",
+        "ad-hoc": "Ad hoc",
+        "ongoing": "Ongoing"
+    }
+}
