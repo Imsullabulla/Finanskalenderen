@@ -44,10 +44,6 @@ interface AppContextType {
     currentSetup: CompanySetup | null;
     setCurrentSetup: (s: CompanySetup) => void;
 
-    // Onboarding
-    onboardingCompleted: boolean;
-    setOnboardingCompleted: (v: boolean) => void;
-
     // Fiscal year overrides (per obligation)
     fiscalYearOverrides: Map<string, number>;
     setFiscalYearOverride: (obligationId: string, month: number) => void;
@@ -153,10 +149,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         loadFromStorage<CompanySetup | null>('fk_currentSetup', null)
     );
 
-    const [onboardingCompleted, setOnboardingCompleted] = useState<boolean>(() =>
-        loadFromStorage<boolean>('fk_onboardingCompleted', false)
-    );
-
     const [fiscalYearOverrides, setFiscalYearOverrides] = useState<Map<string, number>>(() => {
         const stored = loadFromStorage<Record<string, number>>('fk_fiscalYearOverrides', {});
         return objToMap(stored);
@@ -171,10 +163,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         localStorage.setItem('fk_currentSetup', JSON.stringify(currentSetup));
     }, [currentSetup]);
-
-    useEffect(() => {
-        localStorage.setItem('fk_onboardingCompleted', JSON.stringify(onboardingCompleted));
-    }, [onboardingCompleted]);
 
     useEffect(() => {
         localStorage.setItem('fk_fiscalYearOverrides', JSON.stringify(mapToObj(fiscalYearOverrides)));
@@ -321,8 +309,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
                 setViewMode,
                 currentSetup,
                 setCurrentSetup,
-                onboardingCompleted,
-                setOnboardingCompleted,
                 fiscalYearOverrides,
                 setFiscalYearOverride,
                 clearFiscalYearOverride,

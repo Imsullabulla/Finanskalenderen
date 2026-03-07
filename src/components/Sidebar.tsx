@@ -4,7 +4,6 @@ import { useI18n } from '@/i18n/I18nContext';
 import { useApp } from '@/context/AppContext';
 import { obligations as allObligations, Category, categoryLabels, frequencyLabels } from '@/data/obligations';
 import CalendarExportModal from './CalendarExportModal';
-import ReminderSettingsModal from './ReminderSettingsModal';
 
 const categories: (Category | 'all')[] = ['all', 'skat', 'miljø', 'eu', 'afgifter', 'hr', 'regnskab'];
 
@@ -25,7 +24,6 @@ export default function Sidebar() {
 
     const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set());
     const [showExportModal, setShowExportModal] = useState(false);
-    const [showReminderModal, setShowReminderModal] = useState(false);
 
     const toggleCategory = useCallback((cat: string) => {
         setCollapsedCategories(prev => {
@@ -191,19 +189,6 @@ export default function Sidebar() {
             </div>
 
             <div className="sidebar-footer">
-                {/* Email reminders button hidden until Resend domain is verified
-                <button
-                    className="sidebar-export-btn"
-                    onClick={() => setShowReminderModal(true)}
-                    title={lang === 'da' ? 'Konfigurér e-mail påmindelser' : 'Configure email reminders'}
-                >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-                    </svg>
-                    {lang === 'da' ? 'E-mail påmindelser' : 'Email Reminders'}
-                </button>
-                */}
                 <button
                     className="sidebar-export-btn"
                     onClick={() => setShowExportModal(true)}
@@ -219,9 +204,6 @@ export default function Sidebar() {
                 </button>
             </div>
 
-            {/* showReminderModal && (
-                <ReminderSettingsModal onClose={() => setShowReminderModal(false)} />
-            ) */}
             {showExportModal && (
                 <CalendarExportModal onClose={() => setShowExportModal(false)} />
             )}

@@ -5,6 +5,7 @@ import { useApp } from '@/context/AppContext';
 import { Obligation, frequencyLabels } from '@/data/obligations';
 import { DeadlineInfo, UrgencyLevel, calculateAllDeadlines, getUrgencyLevel } from '@/utils/deadlineEngine';
 import { getCountdownColor } from '@/utils/countdownColor';
+import { getCategoryColor } from '@/utils/categoryColors';
 import type { ObligationState } from '@/context/AppContext';
 
 type CalendarMode = 'day' | 'week' | 'month' | 'year';
@@ -67,18 +68,6 @@ function getStatusColor(urgency: UrgencyLevel, reported: boolean): string {
         case 'warning': return 'var(--status-warning)';
         case 'upcoming': return 'var(--status-upcoming)';
         default: return 'var(--status-safe)';
-    }
-}
-
-function getCategoryColor(category: string): string {
-    switch (category) {
-        case 'skat':     return '#a2d2ff';
-        case 'miljø':    return '#b5ead7';
-        case 'eu':       return '#bde0fe';
-        case 'afgifter': return '#ffafcc';
-        case 'hr':       return '#ffc8dd';
-        case 'regnskab': return '#cdb4db';
-        default:         return '#e2e8f0';
     }
 }
 

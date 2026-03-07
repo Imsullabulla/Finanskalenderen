@@ -5,6 +5,7 @@ import { useApp } from '@/context/AppContext';
 import { frequencyLabels } from '@/data/obligations';
 import type { UrgencyLevel } from '@/utils/deadlineEngine';
 import { getCountdownColor } from '@/utils/countdownColor';
+import { getCategoryColor } from '@/utils/categoryColors';
 
 export default function ListView() {
     const { lang, t } = useI18n();
@@ -19,18 +20,6 @@ export default function ListView() {
             case 'warning': return 'var(--status-warning)';
             case 'upcoming': return 'var(--status-upcoming)';
             default: return 'var(--status-safe)';
-        }
-    };
-
-    const getCategoryColor = (category: string) => {
-        switch (category) {
-            case 'skat':     return '#a2d2ff';
-            case 'miljø':    return '#b5ead7';
-            case 'eu':       return '#bde0fe';
-            case 'afgifter': return '#ffafcc';
-            case 'hr':       return '#ffc8dd';
-            case 'regnskab': return '#cdb4db';
-            default:         return '#e2e8f0';
         }
     };
 
@@ -55,7 +44,10 @@ export default function ListView() {
                         <span className="list-dot" style={{ background: getCategoryColor(o.category) }} />
                         <span className="list-name">{name}</span>
                         <span className="list-date">{o.deadlineInfo.formattedDate}</span>
-                        <span className="list-countdown" style={{ color: getCountdownColor(o.deadlineInfo.daysRemaining) }}>
+                        <span
+                            className={`list-countdown${o.deadlineInfo.daysRemaining === 0 ? ' countdown-today' : ''}`}
+                            style={o.deadlineInfo.daysRemaining !== 0 ? { color: getCountdownColor(o.deadlineInfo.daysRemaining) } : undefined}
+                        >
                             {o.deadlineInfo.formattedCountdown}
                         </span>
                         <span className="list-freq">{freqLabel}</span>

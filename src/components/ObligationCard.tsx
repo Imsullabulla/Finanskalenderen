@@ -5,6 +5,7 @@ import { useApp } from '@/context/AppContext';
 import { Obligation, frequencyLabels, obligationGroups } from '@/data/obligations';
 import { DeadlineInfo, UrgencyLevel } from '@/utils/deadlineEngine';
 import { getCountdownColor } from '@/utils/countdownColor';
+import { getCategoryColor } from '@/utils/categoryColors';
 import type { ObligationState } from '@/context/AppContext';
 import CalendarSyncButton from '@/components/CalendarSyncButton';
 import { fireConfetti } from '@/utils/confetti';
@@ -19,18 +20,6 @@ interface ObligationCardProps {
 const MONTHS_DA = ['Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December'];
 const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-function getCategoryColor(category: string): string {
-    switch (category) {
-        case 'skat':     return '#a2d2ff';
-        case 'miljø':    return '#b5ead7';
-        case 'eu':       return '#bde0fe';
-        case 'afgifter': return '#ffafcc';
-        case 'hr':       return '#ffc8dd';
-        case 'regnskab': return '#cdb4db';
-        default:         return '#e2e8f0';
-    }
-}
-
 export default function ObligationCard({ obligation, index = 0, isExpanded = false, onExpand }: ObligationCardProps) {
     const { lang, t } = useI18n();
     const { markReported, unmarkReported, scrollTargetId, clearScrollTarget, fiscalYearOverrides, setFiscalYearOverride } = useApp();
@@ -40,7 +29,6 @@ export default function ObligationCard({ obligation, index = 0, isExpanded = fal
     const { deadlineInfo, state } = obligation;
     const urgency: UrgencyLevel = state.reported ? 'safe' : deadlineInfo.urgency;
     const statusClass = state.reported ? 'reported' : urgency;
-    const shouldSpan = deadlineInfo.sizeMultiplier >= 1.5 && !state.reported;
 
     const freqLabel = frequencyLabels[obligation.frequency]?.[lang] || obligation.frequency;
     const name = obligation.name[lang] || obligation.name.da;
@@ -84,7 +72,7 @@ export default function ObligationCard({ obligation, index = 0, isExpanded = fal
     return (
         <div
             ref={cardRef}
-            className={`obligation-card status-${statusClass} ${shouldSpan ? 'span-2' : ''}`}
+            className={`obligation-card status-${statusClass}`}
             style={{ animationDelay: `${index * 0.04}s`, cursor: 'pointer', '--cat-color': getCategoryColor(obligation.category) } as React.CSSProperties}
             onClick={handleCardClick}
             data-obligation-id={obligation.id}
@@ -110,7 +98,10 @@ export default function ObligationCard({ obligation, index = 0, isExpanded = fal
                 <div className="card-deadline-date">
                     {t.floor.deadline}: {deadlineInfo.formattedDate}
                 </div>
-                <div className="card-countdown" style={{ color: getCountdownColor(deadlineInfo.daysRemaining) }}>
+                <div
+                    className={`card-countdown${deadlineInfo.daysRemaining === 0 ? ' countdown-today' : ''}`}
+                    style={deadlineInfo.daysRemaining !== 0 ? { color: getCountdownColor(deadlineInfo.daysRemaining) } : undefined}
+                >
                     {deadlineInfo.formattedCountdown}
                 </div>
             </div>

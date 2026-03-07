@@ -1,4 +1,5 @@
 // Calendar export utilities for Google, Outlook, and Apple Calendar
+import type { Frequency } from '@/data/obligations';
 
 function formatDateForICS(date: Date): string {
   return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
@@ -90,25 +91,15 @@ export function getOutlookCalendarUrl(params: {
 
 // ─── Bulk ICS generation (multi-obligation / multi-event) ────────────────────
 
-export type ExportDuration = '1year' | '2years' | '3years' | 'ongoing';
+export type ExportDuration = '1year' | '2years' | '3years' | '5years';
 
 export interface BulkExportObligation {
   id: string;
   name: string;
   description: string;
-  frequency: string; // Frequency from obligations.ts
+  frequency: Frequency;
   nextDeadline: Date | null;
   allDeadlines: Date[]; // pre-calculated for the chosen horizon
-}
-
-function getFrequencyRRule(frequency: string): string | null {
-  switch (frequency) {
-    case 'monthly':    return 'RRULE:FREQ=MONTHLY';
-    case 'quarterly':  return 'RRULE:FREQ=MONTHLY;INTERVAL=3';
-    case 'semi-annual': return 'RRULE:FREQ=MONTHLY;INTERVAL=6';
-    case 'annual':     return 'RRULE:FREQ=YEARLY';
-    default:           return null;
-  }
 }
 
 export function generateBulkICS(
@@ -119,13 +110,11 @@ export function generateBulkICS(
   const dtstamp = formatDateForICS(now);
   const events: string[] = [];
 
-  if (duration === 'ongoing') {
-    for (const ob of obligations) {
-      if (!ob.nextDeadline) continue;
-      const rrule = getFrequencyRRule(ob.frequency);
-      const uid = `${ob.id}-recurring@finanskalenderen`;
-      const dtStart = formatAllDayDateForICS(ob.nextDeadline);
-      const dtEnd = formatAllDayDateForICS(nextDay(ob.nextDeadline));
+  for (const ob of obligations) {
+    for (const deadline of ob.allDeadlines) {
+      const uid = `${ob.id}-${deadline.toISOString().split('T')[0]}@finanskalenderen`;
+      const dtStart = formatAllDayDateForICS(deadline);
+      const dtEnd = formatAllDayDateForICS(nextDay(deadline));
       const vevent = [
         'BEGIN:VEVENT',
         `UID:${uid}`,
@@ -134,29 +123,9 @@ export function generateBulkICS(
         `DTEND;VALUE=DATE:${dtEnd}`,
         `SUMMARY:${ob.name}`,
         `DESCRIPTION:${ob.description.replace(/\n/g, '\\n')}`,
-        ...(rrule ? [rrule] : []),
         'END:VEVENT',
       ];
       events.push(vevent.join('\r\n'));
-    }
-  } else {
-    for (const ob of obligations) {
-      for (const deadline of ob.allDeadlines) {
-        const uid = `${ob.id}-${deadline.toISOString().split('T')[0]}@finanskalenderen`;
-        const dtStart = formatAllDayDateForICS(deadline);
-        const dtEnd = formatAllDayDateForICS(nextDay(deadline));
-        const vevent = [
-          'BEGIN:VEVENT',
-          `UID:${uid}`,
-          `DTSTAMP:${dtstamp}`,
-          `DTSTART;VALUE=DATE:${dtStart}`,
-          `DTEND;VALUE=DATE:${dtEnd}`,
-          `SUMMARY:${ob.name}`,
-          `DESCRIPTION:${ob.description.replace(/\n/g, '\\n')}`,
-          'END:VEVENT',
-        ];
-        events.push(vevent.join('\r\n'));
-      }
     }
   }
 

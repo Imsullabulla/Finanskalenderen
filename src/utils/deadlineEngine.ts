@@ -9,7 +9,6 @@ export interface DeadlineInfo {
     nextDeadline: Date;
     daysRemaining: number;
     urgency: UrgencyLevel;
-    sizeMultiplier: number;
     formattedDate: string;
     formattedCountdown: string;
 }
@@ -269,16 +268,6 @@ export const getUrgencyLevel = (daysRemaining: number | null, frequency: Frequen
     }
 };
 
-export const getSizeMultiplier = (urgency: UrgencyLevel): number => {
-    switch (urgency) {
-        case 'overdue': return 2.0;
-        case 'critical': return 1.5;
-        case 'warning': return 1.25;
-        case 'upcoming': return 1.1;
-        case 'safe': return 1.0;
-        case 'inactive': return 0.8;
-    }
-};
 
 // ─── Format helpers ───────────────────────────────────────────────────────────
 
@@ -323,7 +312,6 @@ export const getDeadlineInfo = (
             nextDeadline: new Date(9999, 11, 31),
             daysRemaining: 999,
             urgency: 'safe',
-            sizeMultiplier: 1.0,
             formattedDate: lang === 'da' ? 'Løbende' : 'Ongoing',
             formattedCountdown: lang === 'da' ? 'Ingen fast frist' : 'No fixed deadline',
         };
@@ -333,13 +321,10 @@ export const getDeadlineInfo = (
     const diffTime = nextDeadline.getTime() - now.getTime();
     const daysRemaining = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     const urgency = getUrgencyLevel(daysRemaining, obligation.frequency);
-    const sizeMultiplier = getSizeMultiplier(urgency);
-
     return {
         nextDeadline,
         daysRemaining,
         urgency,
-        sizeMultiplier,
         formattedDate: formatDate(nextDeadline, lang),
         formattedCountdown: formatCountdown(daysRemaining, lang),
     };

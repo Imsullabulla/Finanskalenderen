@@ -5,16 +5,9 @@ import { AppProvider, useApp } from '@/context/AppContext';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import FloorGrid from '@/components/FloorGrid';
-import OnboardingWizard from '@/components/OnboardingWizard';
 
 function AppShell() {
-  const { onboardingCompleted, setOnboardingCompleted, sidebarCollapsed, toggleSidebar } = useApp();
-
-  if (!onboardingCompleted) {
-    return (
-      <OnboardingWizard onComplete={() => setOnboardingCompleted(true)} />
-    );
-  }
+  const { sidebarCollapsed, toggleSidebar } = useApp();
 
   return (
     <>
