@@ -21,8 +21,9 @@ export default function Header() {
                     </svg>
                 </button>
                 <div className="header-logo">
-                    <div className="header-logo-icon">F</div>
-                    <span className="header-logo-text">{t.app.title}</span>
+                    <div className="rainbow-outline-btn">
+                        <span className="header-logo-text">{t.app.title}</span>
+                    </div>
                 </div>
             </div>
 

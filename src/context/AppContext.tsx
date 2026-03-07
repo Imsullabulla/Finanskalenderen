@@ -9,7 +9,6 @@ export type ViewMode = 'normal' | 'calendar' | 'list';
 export interface ObligationState {
     id: string;
     active: boolean;
-    reported: boolean;
 }
 
 export interface CompanySetup {
@@ -26,8 +25,6 @@ interface AppContextType {
     // Obligations
     obligationStates: Map<string, ObligationState>;
     toggleObligation: (id: string) => void;
-    markReported: (id: string) => void;
-    unmarkReported: (id: string) => void;
     getActiveObligations: () => (Obligation & { deadlineInfo: DeadlineInfo; state: ObligationState })[];
     allObligationsActive: boolean;
     toggleAllObligations: () => void;
@@ -52,7 +49,6 @@ interface AppContextType {
     // Compliance score
     complianceScore: {
         total: number;
-        reported: number;
         pending: number;
         overdue: number;
         inactive: number;
@@ -115,7 +111,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         const stored = loadFromStorage<Record<string, ObligationState>>('fk_obligationStates', {});
         const map = new Map<string, ObligationState>();
         allObligations.forEach(o => {
-            map.set(o.id, stored[o.id] ?? { id: o.id, active: true, reported: false });
+            map.set(o.id, stored[o.id] ?? { id: o.id, active: true });
         });
         return map;
     });
@@ -175,7 +171,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         setObligationStates(prev => {
             const next = new Map(prev);
             allObligations.forEach(o => {
-                const current = next.get(o.id) ?? { id: o.id, active: true, reported: false };
+                const current = next.get(o.id) ?? { id: o.id, active: true };
                 const shouldBeActive = matchesTriggerRules(o, setup);
                 next.set(o.id, { ...current, active: shouldBeActive });
             });
@@ -190,24 +186,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
             const newMap = new Map(prev);
             const current = newMap.get(id);
             if (current) newMap.set(id, { ...current, active: !current.active });
-            return newMap;
-        });
-    }, []);
-
-    const markReported = useCallback((id: string) => {
-        setObligationStates(prev => {
-            const newMap = new Map(prev);
-            const current = newMap.get(id);
-            if (current) newMap.set(id, { ...current, reported: true });
-            return newMap;
-        });
-    }, []);
-
-    const unmarkReported = useCallback((id: string) => {
-        setObligationStates(prev => {
-            const newMap = new Map(prev);
-            const current = newMap.get(id);
-            if (current) newMap.set(id, { ...current, reported: false });
             return newMap;
         });
     }, []);
@@ -261,7 +239,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const getActiveObligations = useCallback(() => {
         return allObligations
             .map(o => {
-                const state = obligationStates.get(o.id) || { id: o.id, active: true, reported: false };
+                const state = obligationStates.get(o.id) || { id: o.id, active: true };
                 const fiscalYear = fiscalYearOverrides.get(o.id) || 12;
                 const deadlineInfo = getDeadlineInfo(o, lang, now, fiscalYear);
                 return { ...o, deadlineInfo, state };
@@ -271,22 +249,18 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }, [obligationStates, lang, fiscalYearOverrides, now]);
 
     const complianceScore = useMemo(() => {
-        let total = 0, reported = 0, pending = 0, overdue = 0, inactive = 0;
+        let total = 0, pending = 0, overdue = 0, inactive = 0;
         allObligations.forEach(o => {
             const state = obligationStates.get(o.id);
             if (!state || !state.active) { inactive++; return; }
             total++;
-            if (state.reported) {
-                reported++;
-            } else {
-                const fiscalYear = fiscalYearOverrides.get(o.id) || 12;
-                const info = getDeadlineInfo(o, lang, now, fiscalYear);
-                if (info.urgency === 'overdue') overdue++;
-                else pending++;
-            }
+            const fiscalYear = fiscalYearOverrides.get(o.id) || 12;
+            const info = getDeadlineInfo(o, lang, now, fiscalYear);
+            if (info.urgency === 'overdue') overdue++;
+            else pending++;
         });
         return {
-            total, reported, pending, overdue, inactive,
+            total, pending, overdue, inactive,
             percentage: total > 0 ? Math.round(((total - overdue) / total) * 100) : 100,
         };
     }, [obligationStates, lang, fiscalYearOverrides, now]);
@@ -296,8 +270,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
             value={{
                 obligationStates,
                 toggleObligation,
-                markReported,
-                unmarkReported,
                 getActiveObligations,
                 allObligationsActive,
                 toggleAllObligations,

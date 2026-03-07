@@ -22,13 +22,13 @@ const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July
 
 export default function ObligationCard({ obligation, index = 0, isExpanded = false, onExpand }: ObligationCardProps) {
     const { lang, t } = useI18n();
-    const { markReported, unmarkReported, scrollTargetId, clearScrollTarget, fiscalYearOverrides, setFiscalYearOverride } = useApp();
+    const { scrollTargetId, clearScrollTarget, fiscalYearOverrides, setFiscalYearOverride } = useApp();
     const cardRef = useRef<HTMLDivElement>(null);
     const expanded = isExpanded;
 
-    const { deadlineInfo, state } = obligation;
-    const urgency: UrgencyLevel = state.reported ? 'safe' : deadlineInfo.urgency;
-    const statusClass = state.reported ? 'reported' : urgency;
+    const { deadlineInfo } = obligation;
+    const urgency: UrgencyLevel = deadlineInfo.urgency;
+    const statusClass = urgency;
 
     const freqLabel = frequencyLabels[obligation.frequency]?.[lang] || obligation.frequency;
     const name = obligation.name[lang] || obligation.name.da;

@@ -60,8 +60,7 @@ const MONTH_NAMES_EN = ['January', 'February', 'March', 'April', 'May', 'June', 
 const WEEKDAYS_DA = ['Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør', 'Søn'];
 const WEEKDAYS_EN = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-function getStatusColor(urgency: UrgencyLevel, reported: boolean): string {
-    if (reported) return 'var(--status-reported)';
+function getStatusColor(urgency: UrgencyLevel): string {
     switch (urgency) {
         case 'overdue': return 'var(--status-overdue)';
         case 'critical': return 'var(--status-critical)';
@@ -151,7 +150,7 @@ export default function CalendarView() {
                 const key = `${deadline.getFullYear()}-${String(deadline.getMonth() + 1).padStart(2, '0')}-${String(deadline.getDate()).padStart(2, '0')}`;
                 const diffTime = deadline.getTime() - now.getTime();
                 const daysRemaining = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                const urgency = o.state.reported ? 'safe' as UrgencyLevel : getUrgencyLevel(daysRemaining, o.frequency);
+                const urgency = getUrgencyLevel(daysRemaining, o.frequency);
                 const periodLabel = getPeriodLabel(o, deadline, lang);
                 const event: CalendarEvent = { obligation: o, deadline, daysRemaining, urgency, periodLabel };
                 const arr = map.get(key) || [];
@@ -319,12 +318,18 @@ export default function CalendarView() {
             </div>
 
             {selectedDate && mode !== 'day' && (
-                <DateDetailPanel
-                    date={selectedDate}
-                    events={getEventsForDate(selectedDate)}
-                    onClose={() => setSelectedDate(null)}
-                    lang={lang}
-                />
+                <>
+                    <div
+                        style={{ position: 'fixed', inset: 0, zIndex: 79 }}
+                        onClick={() => setSelectedDate(null)}
+                    />
+                    <DateDetailPanel
+                        date={selectedDate}
+                        events={getEventsForDate(selectedDate)}
+                        onClose={() => setSelectedDate(null)}
+                        lang={lang}
+                    />
+                </>
             )}
         </div>
     );
@@ -386,7 +391,7 @@ function MonthView({
                                                 </div>
                                                 <div className="cal-chip-tooltip">
                                                     <div className="cal-chip-tooltip-header">
-                                                        <span className="cal-chip-tooltip-dot" style={{ background: getStatusColor(ev.urgency, ev.obligation.state.reported) }} />
+                                                        <span className="cal-chip-tooltip-dot" style={{ background: getStatusColor(ev.urgency) }} />
                                                         <span className="cal-chip-tooltip-name">{name}</span>
                                                         <span className="cal-chip-tooltip-freq">{freqLabel}{ev.periodLabel ? ` · ${ev.periodLabel}` : ''}</span>
                                                     </div>
@@ -486,7 +491,6 @@ function DayView({
 }: {
     currentDate: Date; getEventsForDate: (d: Date) => CalendarEvent[]; lang: string;
 }) {
-    const { markReported, unmarkReported } = useApp();
     const { t } = useI18n();
     const events = getEventsForDate(currentDate);
     const today = new Date();
@@ -618,12 +622,11 @@ function DateDetailPanel({
 }: {
     date: Date; events: CalendarEvent[]; onClose: () => void; lang: string;
 }) {
-    const { markReported, unmarkReported } = useApp();
     const { t } = useI18n();
     const monthNames = lang === 'da' ? MONTH_NAMES_DA : MONTH_NAMES_EN;
 
     return (
-        <div className="cal-detail-panel">
+        <div className="cal-detail-panel" onClick={e => e.stopPropagation()}>
             <div className="cal-detail-header">
                 <div>
                     <h3 className="cal-detail-date">
